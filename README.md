@@ -24,3 +24,9 @@ Deactivate: `deactivate`
 Install: `pip install django`
 Start project: `django-admin startproject <project_name>`
 Run server: `python3 manage.py runserver` (on the project folder)
+
+And you can see initial page on the browser with `http://127.0.0.1:8000`\
+
+## Startapp
+
+1. base
