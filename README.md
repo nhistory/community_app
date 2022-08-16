@@ -5,6 +5,7 @@
 A community feature application made by django framework.
 
 - Made a virtual environment with virtualenv.
+- Used dynamic URL connection between templates with inheritance.
 
 ## Project version
 
@@ -152,3 +153,19 @@ If you want to iterate with for loop, you can do like below.
   </div>
 </div>
 ```
+
+## Dynamic URL
+
+Definitely, you are thinking about how can I use dynamic URL in django project. For doing this, fix urlpatterns of `url.py` and modify `room` function inside of `view.py`
+
+```python
+def room(request, pk):
+    room = None
+    for i in rooms:
+        if i['id'] == int(pk):
+            room = i
+    context = {'room': room}
+    return render(request, 'base/room.html', context)
+```
+
+By doing this, we can check whether room's id is equal to `pk` value on the requested url. If it is correct, django will reponse specific template on the browser.
