@@ -122,3 +122,33 @@ home.html
 
 {% endblock content %}
 ```
+
+## Using dynamic data on templates
+
+We can make values on `view.py` and send data by using `context`.
+
+```python
+rooms = [
+    {'id':1, 'name':'Lets learn python!'},
+    {'id':2, 'name':'Design with me'},
+    {'id':3, 'name':'Frontend developers'},
+]
+
+def home(request):
+    context = {'rooms': rooms}
+    return render(request, 'home.html', context)
+```
+
+If you want to iterate with for loop, you can do like below.
+
+```html
+<div>
+  <div>
+    {% for room in rooms %}
+    <div>
+      <h5>{{room.id}} -- {{room.name}}</h5>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+```
