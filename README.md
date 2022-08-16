@@ -99,3 +99,26 @@ def home(request):
 def room(request):
     return render(request, 'room.html')
 ```
+
+## Inherit templates
+
+We can handle templates inside of html by using `main.html` and `block content`.
+
+main.html
+
+```html
+<body>
+  {% include 'navbar.html' %} {% block content %} {% endblock %}
+</body>
+```
+
+Now, you can wrap other templates by usint `{% extends 'main.html' %}`.
+
+home.html
+
+```html
+{% extends 'main.html' %} {% block content%}
+<h1>Home Template</h1>
+
+{% endblock content %}
+```
