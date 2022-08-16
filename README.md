@@ -65,3 +65,37 @@ urlpatterns = [
     path('', include('base.urls'))
 ]
 ```
+
+## Connect templates
+
+Add templates destination on `settings.py`.
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+Create return value with `render` module.
+
+```python
+def home(request):
+    return render(request, 'home.html')
+
+def room(request):
+    return render(request, 'room.html')
+```
