@@ -169,3 +169,22 @@ def room(request, pk):
 ```
 
 By doing this, we can check whether room's id is equal to `pk` value on the requested url. If it is correct, django will reponse specific template on the browser.
+
+## Add Room class for data table
+
+First data table for this project should be made inside of `base/models.py`.
+
+```python
+# Class for data table - attributes are column field
+class Room(models.Model):
+  # host =
+  # topic =
+  name = models.CharField(max_length=200)
+  description = models.TextField(null=True, blank=True)
+  # participants =
+  updated = models.DateTimeField(auto_now=True)
+  created = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return self.name
+```
