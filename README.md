@@ -6,6 +6,7 @@ A community feature application made by django framework.
 
 - Made a virtual environment with virtualenv.
 - Used dynamic URL connection between templates with inheritance.
+- Did data migration with models and python class.
 
 ## Project version
 
@@ -170,7 +171,7 @@ def room(request, pk):
 
 By doing this, we can check whether room's id is equal to `pk` value on the requested url. If it is correct, django will reponse specific template on the browser.
 
-## Add Room class for data table
+## Data migration
 
 First data table for this project should be made inside of `base/models.py`.
 
@@ -188,3 +189,25 @@ class Room(models.Model):
   def __str__(self):
     return self.name
 ```
+
+After this, use `makemigrations` command and do migrate data.
+
+`python3 manage.py makemigrations`
+
+`0001_initial.py` is created on `migrations` folder.
+
+`python3 manage.py migrate`
+
+In order to check database, you need to make admin user.
+
+`python3 manage.py createsuperuser`
+
+After enter user information, we can use django administration page. But migrated room data is not seen now. Something should be added on `admin.py`.
+
+```python
+from .models import Room
+
+admin.site.register(Room)
+```
+
+Now you can see `Rooms` section on the admin page.
