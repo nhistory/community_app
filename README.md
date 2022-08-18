@@ -211,3 +211,21 @@ admin.site.register(Room)
 ```
 
 Now you can see `Rooms` section on the admin page.
+
+## Connect with schema
+
+After we create and migrate `Rooms` data, it can be used as an `objects` and many kinds of methods like below. (all(), get(), filter())
+
+views.py
+
+```python
+def home(request):
+    rooms = Room.objects.all()
+    context = {'rooms': rooms}
+    return render(request, 'base/home.html', context)
+
+def room(request, pk):
+    room = Room.objects.get(id=pk)
+    context = {'room': room}
+    return render(request, 'base/room.html', context)
+```
