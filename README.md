@@ -229,3 +229,24 @@ def room(request, pk):
     context = {'room': room}
     return render(request, 'base/room.html', context)
 ```
+
+## Use ModelForm to create forms
+
+- ModelForm: ModelForm is a regular Form which can automatically generate certain fields. The fields that are automatically generated depend on the content of the Meta class and on which fields have already been defined declaratively. Basically, ModelForm will only generate fields that are missing from the form, or in other words, fields that weren’t defined declaratively.
+
+forms.py
+
+```python
+from django.forms import ModelForm
+from .models import Room
+
+class RoomForm(ModelForm):
+  class Meta:
+    model = Room
+    fields = '__all__'
+```
+
+## Reference
+
+- https://youtu.be/PtQiiknWUcI
+-
