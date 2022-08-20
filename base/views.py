@@ -1,5 +1,4 @@
-from multiprocessing import context
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Room
 from .forms import RoomForm
 
@@ -23,5 +22,14 @@ def room(request, pk):
 
 def createRoom(request):
     form = RoomForm()
+    # If create-room request POST
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        # form validation
+        if form.is_valid():
+            form.save()
+            # redirect to the homepage
+            return redirect('home')
+            
     context = {'form': form}
     return render(request, 'base/room_form.html', context)

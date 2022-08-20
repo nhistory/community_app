@@ -246,7 +246,22 @@ class RoomForm(ModelForm):
     fields = '__all__'
 ```
 
+To create a new room and save, we can use `RoomForm(request.POST)`.
+
+view.py
+
+```python
+    # If create-room request POST
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        # form validation
+        if form.is_valid():
+            form.save()
+            # redirect to the homepage
+            return redirect('home')
+```
+
 ## Reference
 
 - https://youtu.be/PtQiiknWUcI
--
+- https://docs.djangoproject.com/en/4.0/topics/forms/modelforms/
