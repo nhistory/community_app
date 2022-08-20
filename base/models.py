@@ -20,6 +20,10 @@ class Room(models.Model):
   updated = models.DateTimeField(auto_now=True)
   created = models.DateTimeField(auto_now_add=True)
 
+  # Ordering the list of rooms
+  class Meta:
+    ordering = ['-updated', '-created'] # '-' means inverted order
+
   def __str__(self):
     return self.name
 
