@@ -230,7 +230,9 @@ def room(request, pk):
     return render(request, 'base/room.html', context)
 ```
 
-## Use ModelForm to create forms
+## CRUD functionality
+
+### Use ModelForm to create forms
 
 - ModelForm: ModelForm is a regular Form which can automatically generate certain fields. The fields that are automatically generated depend on the content of the Meta class and on which fields have already been defined declaratively. Basically, ModelForm will only generate fields that are missing from the form, or in other words, fields that weren’t defined declaratively.
 
@@ -259,6 +261,38 @@ view.py
             form.save()
             # redirect to the homepage
             return redirect('home')
+```
+
+### Update room information
+
+We can make `updateRoom` function to edit room information. If user click `Edit` link on the `home.html`, `url.py` will connect to `update-room/<str:pk>/` and request `updateRoom` function. After edit this room's information, redirected into home page like below.
+
+```python
+def updateRoom(request, pk):
+    room = Room.objects.get(id=pk)
+    form = RoomForm(instance=room)
+
+    if request.method == 'POST':
+        form = RoomForm(request.POST, instance=room)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'base/room_form.html', context)
+```
+
+### Delete room
+
+Such as `updateRoom` feature, you can add `deleteRoom` function on `views.py`.
+
+```python
+def deleteRoom(request, pk):
+    room = Room.objects.get(id=pk)
+    if request.method == 'POST':
+        room.delete()
+        return redirect('home')
+    return render(request, 'base/delete.html', {'obj':room})
 ```
 
 ## Reference
