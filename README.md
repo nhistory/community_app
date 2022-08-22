@@ -7,6 +7,7 @@ A community feature application made by django framework.
 - Made a virtual environment with virtualenv.
 - Used dynamic URL connection between templates with inheritance.
 - Did data migration with models and python class.
+- Create CRUD feature by using modelForm, request and redirect.
 
 ## Project version
 
