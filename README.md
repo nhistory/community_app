@@ -8,6 +8,7 @@ A community feature application made by django framework.
 - Used dynamic URL connection between templates with inheritance.
 - Did data migration with models and python class.
 - Create CRUD feature by using modelForm, request and redirect.
+- Add search bar to find room and description with django db model Q.
 
 ## Project version
 
