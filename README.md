@@ -297,7 +297,59 @@ def deleteRoom(request, pk):
     return render(request, 'base/delete.html', {'obj':room})
 ```
 
+## Django authentication
+
+Django uses session to authenticate user on the browser. To understand this, we need to figure out what session is, what is differencies between session and cookies on web browser.
+
+### Differencies between session and cookies
+
+Cookies are client-side files that are stored on a local computer and contain user information. Sessions are server-side files that store user information. Cookies expire after the user specified lifetime. The session ends when the user closes the browser or logs out of the program.
+
+Sessions are more secure than cookies, since they're normally protected by some kind of server-side security.
+
+Django uses a cookie containing a special session id to identify each browser and its associated session with the site.
+
+### Create authentication feature
+
+To authenticate user with session in django framework, you should import several modules and create `loginPage`, `logoutUser` function on `views.py`.
+
+```python
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+
+...
+
+def loginPage(request):
+
+    if request.method == 'POST': # if user input any information
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Check user is exist
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, username=username, password=password)
+
+        # if user is not None, login executed
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.errir(request, 'Username OR password does not exist')
+
+    context = {}
+    return render(request, 'base/login_register.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
+```
+
 ## Reference
 
 - https://youtu.be/PtQiiknWUcI
 - https://docs.djangoproject.com/en/4.0/topics/forms/modelforms/
+- https://www.tutorialspoint.com/What-is-the-difference-between-session-and-cookies#:~:text=Cookies%20are%20client%2Dside%20files,files%20that%20store%20user%20information.&text=Cookies%20expire%20after%20the%20user,logs%20out%20of%20the%20program.
