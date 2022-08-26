@@ -9,6 +9,8 @@ A community feature application made by django framework.
 - Did data migration with models and python class.
 - Create CRUD feature by using modelForm, request and redirect.
 - Add search bar to find room and description with django db model Q.
+- Used cookie-based sessions to authenticate user information.
+- Imported decorator module to restrict user authority.
 
 ## Project version
 
@@ -346,6 +348,32 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+```
+
+### Restrict user authority
+
+After add user authentication, you are going to restrict user authority to edit or update some information. There bunch of ways to do this, but I will use `decorators` and `HttpResponse` in django.
+
+For doing this, you need to import modules on `views.py`.
+
+```python
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+```
+
+And add annotaion to each function that need user login required like below.
+
+```python
+@login_required(login_url='/login')
+def createRoom(request):
+    ...
+```
+
+We can check current user is equal to host of the room by using conditional statement.
+
+```python
+    if request.user != room.host:
+        return HttpResponse('You are not allowed here!!')
 ```
 
 ## Reference
