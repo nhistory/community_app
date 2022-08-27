@@ -8,9 +8,10 @@ A community feature application made by django framework.
 - Used dynamic URL connection between templates with inheritance.
 - Did data migration with models and python class.
 - Create CRUD feature by using modelForm, request and redirect.
-- Add search bar to find room and description with django db model Q.
+- Added search bar to find room and description with django db model Q.
 - Used cookie-based sessions to authenticate user information.
 - Imported decorator module to restrict user authority.
+- Made user registration form by using UserCreationForm
 
 ## Project version
 
@@ -374,6 +375,44 @@ We can check current user is equal to host of the room by using conditional stat
 ```python
     if request.user != room.host:
         return HttpResponse('You are not allowed here!!')
+```
+
+## User registration
+
+For now, we will make user resgistration functionality. There is a pre-made register form that django has. For this project, we will use `UserCreationForm`.
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+```
+
+And make `registerPage` function.
+
+```python
+def registerPage(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        # Change username into lower case
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'An error occurred during registration')
+
+    return render(request, 'base/login_register.html', {'form': form})
+```
+
+After added `{{form.as_p}}`, we can see django user registration form.
+
+```html
+<form method="POST" action="">
+  {% csrf_token %} {{form.as_p}}
+  <input type="submit" value="Register" />
+</form>
 ```
 
 ## Reference
