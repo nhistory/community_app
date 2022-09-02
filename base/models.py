@@ -34,5 +34,10 @@ class Message(models.Model):
   updated = models.DateTimeField(auto_now=True)
   created = models.DateTimeField(auto_now_add=True)
 
+  # Fix message ordering by updated, created
+  class Meta:
+    ordering = ['-updated', '-created'] # '-' means inverted order
+
   def __str__(self):
     return self.body[0:50]
+  
